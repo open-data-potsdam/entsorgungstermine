@@ -50,7 +50,11 @@ $(document).ready(function() {
 		$.ajax(uri, function(data) { }).done(function(disposalObj) {
 			let currentMonth = currentDate.getMonth();
 			let disposalMonth = MONTHS[currentMonth];
-			let disposalDates = disposalObj[streetName][disposalMonth];
+			let selectedStreet = disposalObj[streetName];
+			let disposalDates = [];
+
+			MONTHS.forEach(month => disposalDates.push(selectedStreet[month]));
+			disposalDates = [].concat.apply([], disposalDates);
 
 			updateDisposalDates(disposalDates);
 		});
