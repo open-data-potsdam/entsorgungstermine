@@ -62,6 +62,13 @@ $(document).ready(function() {
 	 * @return {[type]}               [description]
 	 */
 	function updateDisposalDates(disposalDates) {
+		disposalDates = disposalDates.filter(d => {
+			let date = new Date(d.date);
+			let today = new Date();
+
+			return date >= today;
+		});
+
 		let nextDisposalDate = disposalDates.slice(0, 1);
 		let upcomingDisposalDates = disposalDates.slice(1, disposalDates.length);
 
