@@ -1,11 +1,23 @@
 $border-color: #7CFFBA;
 
 body {
-	font-family: Arial;
 	font-size: 14px;
 
+	h2 {
+		font-weight: normal;
+	    padding: 10px 10px 0px;
+	    margin: 20px 0px 10px;
+	    text-transform: uppercase;
+	    letter-spacing: 1px;
+		font-size: 0.8em;
+	}
+
+	.wrapper { width: 65%; margin: 0 auto; }
+
+	#next-disposal-date { position: relative; }
+	#upcoming-disposal-dates { position: relative; }
+
 	.disposal-date {
-		position: relative;
 		margin: 3px 0;
 
 		.date {
@@ -13,14 +25,15 @@ body {
 			padding: 5px 10px;
 			font-size: 1.4em;
 			color: rgb(0, 0, 0);
+			min-width: 60px;
 		}
 
 		.days {
 			display: inline-block;
-			border-right: 1px solid rgba(0, 0, 0, 0.1);
-			min-width: 80px;
+			min-width: 85px;
 			text-align: left;
 			padding: 5px 5px;
+			font-weight: bold;
 		}
 
 		.descr {

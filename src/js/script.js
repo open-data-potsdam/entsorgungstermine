@@ -119,40 +119,34 @@ $(document).ready(function() {
 	 * @return {[type]}         [description]
 	 */
 	function createRow(element) {
+		console.log('element', element);
+
 		//	EXIT
-		element.exit()
+		element
+			.exit()
 			.transition()
-			.duration(1000)
+			.duration(750)
 			.style('opacity', 0)
 			.remove();
 
 		//	UPDATE
 		let spans = element
-			.selectAll('span')
+			.selectAll('span');
 
-		spans
-			.select('span.date')
-			.transition()
-			.duration(1000)
-			.style('opacity', 0)
-			.text(function(d) {
-				let date = new Date(d.date);
-				return dateFormat(date);
-			});
+			spans
+				.select('span.date')
+				.text(function(d) {
+					let date = new Date(d.date);
+					return dateFormat(date);
+				});
 
-		spans
-			.select('span.days')
-			.transition()
-			.duration(1000)
-			.style('opacity', 0)
-			.text(function(d) { return daysTo(d.date); });
+			spans
+				.select('span.days')
+				.text(function(d) { return daysToStr(d.date); });
 
-		spans
-			.select('span.descr')
-			.transition()
-			.duration(1000)
-			.style('opacity', 0)
-			.text(function(d) { return d.descr; });
+			spans
+				.select('span.descr')
+				.text(function(d) { return d.descr; });
 
 		//
 		//	ENTER
@@ -160,47 +154,54 @@ $(document).ready(function() {
 		var enteredDisposals = element.enter()
 			.append('div')
 				.attr('class', 'disposal-date')
+				// .style('position', 'relative')
+				// .style('top', function(d, i) {
+				// 	return 25*i+ "px";
+				// })
 				.style('opacity', 0);
 
-		//	Date
-		enteredDisposals
-			.append('span')
-				.attr('class', 'date')
-				.text(function(d) {
-					let date = new Date(d.date);
-					return dateFormat(date);
-				});
+			//	Date
+			enteredDisposals
+				.append('span')
+					.attr('class', 'date')
+					.text(function(d) {
+						let date = new Date(d.date);
+						return dateFormat(date);
+					});
 
-		//	Days
-		enteredDisposals
-			.append('span')
-				.attr('class', 'days')
-				.text(function(d) {
-					return daysTo(d.date);
-				});
+			//	Days
+			enteredDisposals
+				.append('span')
+					.attr('class', 'days')
+					.text(function(d) {
+						return daysToStr(d.date);
+					});
 
-		//	Description
-		enteredDisposals.append('span')
-				.attr('class', 'descr')
-				.text(function(d) { return d.descr; });
+			//	Description
+			enteredDisposals.append('span')
+					.attr('class', 'descr')
+					.text(function(d) { return d.descr; });
 
 		enteredDisposals
 			.transition()
-			// .delay(1000)
-			.duration(1000)
+			.duration(750)
 			.style('opacity', 1);
 	}
 
 	/**
-	 * [daysTo description]
+	 * [daysToStr description]
 	 * @param  {[type]} date [description]
 	 * @return {[type]}      [description]
 	 */
 	function daysTo(date) {
 		let today = new Date();
 		let toDate = new Date(date);
-		let days = Math.ceil(Math.round(toDate - today) / (1000*60*60*24));
+		let days = Math.ceil(Math.round(toDate - today) / (750*60*60*24));
 
-		return 'in ' + days + ' Tagen';
+		return days;
+	}
+
+	function daysToStr(date) {
+		return 'in ' + daysTo(date) + ' Tagen';
 	}
 });
