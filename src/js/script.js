@@ -3,6 +3,8 @@ $(document).ready(function() {
 	const MONTHS = ['btMCMonth1', 'btMCMonth2', 'btMCMonth3', 'btMCMonth4', 'btMCMonth5', 'btMCMonth6', 'btMCMonth7', 'btMCMonth8', 'btMCMonth9', 'btMCMonth10', 'btMCMonth11', 'btMCMonth12'];
 	let dateFormat = d3.timeFormat("%d.%m.");
 
+	let streetName;
+
 	let $select = $('#streets').selectize({
 	    valueField: 'id',
 	    labelField: 'name',
@@ -39,7 +41,7 @@ $(document).ready(function() {
 	 */
 	function updateDatesFor(street) {
 		let id = street.data().value;
-		let streetName = street.text();
+		streetName = street.text();
 		let currentDate = new Date();
 
 		console.log('streetName', streetName);
@@ -92,59 +94,9 @@ $(document).ready(function() {
 	function updateNextDisposalDate(data) {
 		let disposal = d3.select('div#next-disposal-date')
 				.selectAll('div.disposal-date')
-				.data(data, function(d) { return d; });
+				.data(data, function(d) { return d.date + " - " + streetName; });
 
-		//	EXIT
-		disposal.exit()
-			.transition()
-			.duration(1000)
-			.style('opacity', 0)
-			.remove();
-
-		//	UPDATE
-		let date = disposal
-			.select('span.date')
-			.text(function(d) {
-				let date = new Date(d.date);
-				return dateFormat(date);
-			});
-
-		disposal
-			.select('span.descr')
-			.text(function(d) { return d.descr; });
-
-		//	ENTER
-		var enteredDisposal = disposal.enter()
-			.append('div')
-					.attr('class', 'disposal-date')
-					.style('opacity', 0);
-
-		//	Date
-		enteredDisposal
-			.append('span')
-				.attr('class', 'date')
-				.text(function(d) {
-					let date = new Date(d.date);
-					return dateFormat(date);
-				});
-
-		//	Days
-		enteredDisposal
-			.append('span')
-				.attr('class', 'days')
-				.text(function(d) {
-					return daysTo(d.date);
-				});
-
-		//	Description
-		enteredDisposal.append('span')
-				.attr('class', 'descr')
-				.text(function(d) { return d.descr; });
-
-		enteredDisposal
-			.transition()
-			.duration(1000)
-			.style('opacity', 1);
+		createRow(disposal);
 	}
 
 	/**
@@ -153,40 +105,62 @@ $(document).ready(function() {
 	 * @return {[type]}      [description]
 	 */
 	function updateUpcomingDisposalDates(data) {
+		console.log('selec', streetName);
 		let disposals = d3.select('div#upcoming-disposal-dates')
 				.selectAll('div.disposal-date')
-				.data(data, function(d) { return d; });
+				.data(data, function(d) { return d.date + " - " + streetName });
 
+		createRow(disposals);
+	}
+
+	/**
+	 * [createRow description]
+	 * @param  {[type]} element [description]
+	 * @return {[type]}         [description]
+	 */
+	function createRow(element) {
 		//	EXIT
-		disposals.exit()
+		element.exit()
 			.transition()
 			.duration(1000)
 			.style('opacity', 0)
 			.remove();
 
 		//	UPDATE
-		disposals
+		let spans = element
+			.selectAll('span')
+
+		spans
 			.select('span.date')
+			.transition()
+			.duration(1000)
+			.style('opacity', 0)
 			.text(function(d) {
 				let date = new Date(d.date);
 				return dateFormat(date);
 			});
 
-		disposals
+		spans
 			.select('span.days')
+			.transition()
+			.duration(1000)
+			.style('opacity', 0)
 			.text(function(d) { return daysTo(d.date); });
 
-		disposals
+		spans
 			.select('span.descr')
+			.transition()
+			.duration(1000)
+			.style('opacity', 0)
 			.text(function(d) { return d.descr; });
 
 		//
 		//	ENTER
 		//
-		var enteredDisposals = disposals.enter()
+		var enteredDisposals = element.enter()
 			.append('div')
-					.attr('class', 'disposal-date')
-					.style('opacity', 0);
+				.attr('class', 'disposal-date')
+				.style('opacity', 0);
 
 		//	Date
 		enteredDisposals
@@ -212,10 +186,16 @@ $(document).ready(function() {
 
 		enteredDisposals
 			.transition()
+			// .delay(1000)
 			.duration(1000)
 			.style('opacity', 1);
 	}
 
+	/**
+	 * [daysTo description]
+	 * @param  {[type]} date [description]
+	 * @return {[type]}      [description]
+	 */
 	function daysTo(date) {
 		let today = new Date();
 		let toDate = new Date(date);
