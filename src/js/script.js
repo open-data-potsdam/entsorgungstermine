@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	const MONTHS = ['btMCMonth1', 'btMCMonth2', 'btMCMonth3', 'btMCMonth4', 'btMCMonth5', 'btMCMonth6', 'btMCMonth7', 'btMCMonth8', 'btMCMonth9', 'btMCMonth10', 'btMCMonth11', 'btMCMonth12'];
+	let dateFormat = d3.timeFormat("%d.%m.");
 
 	let $select = $('#streets').selectize({
 	    valueField: 'id',
@@ -61,22 +62,140 @@ $(document).ready(function() {
 	 * @return {[type]}               [description]
 	 */
 	function updateDisposalDates(disposalDates) {
-		d3.select('.disposal-dates')
+		let nextDisposalDate = disposalDates.slice(0, 1);
+		let upcomingDisposalDates = disposalDates.slice(1, disposalDates.length);
+
+		console.log('all', disposalDates);
+		console.log('next', nextDisposalDate);
+		console.log('upcoming', upcomingDisposalDates);
+
+		updateNextDisposalDate(nextDisposalDate);
+		updateUpcomingDisposalDates(upcomingDisposalDates);
+	}
+
+	/**
+	 * [updateNextDisposalDate description]
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	function updateNextDisposalDate(data) {
+		let disposal = d3.select('div#next-disposal-date')
 				.selectAll('div.disposal-date')
-				.data(disposalDates)
-				.enter()
+				.data(data, function(d) { return d; });
+
+		//	EXIT
+		disposal.exit()
+			.transition()
+			.duration(1000)
+			.style('opacity', 0)
+			.remove();
+
+		//	UPDATE
+		let date = disposal
+			.select('span.date')
+			.text(function(d) {
+				let date = new Date(d.date);
+				return dateFormat(date);
+			});
+
+		disposal
+			.select('span.descr')
+			.text(function(d) { return d.descr; });
+
+		//	ENTER
+		var enteredDisposal = disposal.enter()
 			.append('div')
-				.attr('class', 'disposal-date')
+					.attr('class', 'disposal-date')
+					.style('opacity', 0);
+
+		enteredDisposal
 			.append('span')
 				.attr('class', 'date')
-				.text(function(d) { return d.date; })
-			.append('span')
+				.text(function(d) {
+					let date = new Date(d.date);
+					return dateFormat(date);
+				});
+
+		enteredDisposal.append('span')
 				.attr('class', 'descr')
 				.text(function(d) { return d.descr; });
 
-		console.log(disposalDates);
+		enteredDisposal
+			.transition()
+			.duration(1000)
+			.style('opacity', 1);
 	}
 
+	/**
+	 * [updateUpcomingDisposalDates description]
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	function updateUpcomingDisposalDates(data) {
+		let disposals = d3.select('div#upcoming-disposal-dates')
+				.selectAll('div.disposal-date')
+				.data(data, function(d) { return d; });
 
+		//	EXIT
+		disposals.exit()
+			.transition()
+			.duration(1000)
+			.style('opacity', 0)
+			.remove();
 
+		//	UPDATE
+		disposals
+			.select('span.date')
+			.text(function(d) {
+				let date = new Date(d.date);
+				return dateFormat(date);
+			});
+
+		disposals
+			.select('span.descr')
+			.text(function(d) { return d.descr; });
+
+		//
+		//	ENTER
+		//
+		var enteredDisposals = disposals.enter()
+			.append('div')
+					.attr('class', 'disposal-date')
+					.style('opacity', 0);
+
+		//	Date
+		enteredDisposals
+			.append('span')
+				.attr('class', 'date')
+				.text(function(d) {
+					let date = new Date(d.date);
+					return dateFormat(date);
+				});
+
+		//	Days
+		enteredDisposals
+			.append('span')
+				.attr('class', 'days')
+				.text(function(d) {
+					return daysTo(d.date);
+				});
+
+		//	Description
+		enteredDisposals.append('span')
+				.attr('class', 'descr')
+				.text(function(d) { return d.descr; });
+
+		enteredDisposals
+			.transition()
+			.duration(1000)
+			.style('opacity', 1);
+	}
+
+	function daysTo(date) {
+		let today = new Date();
+		let toDate = new Date(date);
+		let days = Math.ceil(Math.round(toDate - today) / (1000*60*60*24));
+
+		return 'in ' + days + ' Tagen';
+	}
 });

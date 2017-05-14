@@ -1,3 +1,32 @@
+$border-color: #7CFFBA;
+
 body {
 	font-family: Arial;
+	font-size: 14px;
+
+	.disposal-date {
+		position: relative;
+		margin: 3px 0;
+
+		.date {
+			display: inline-block;
+			padding: 5px 10px;
+			font-size: 1.4em;
+			color: rgb(0, 0, 0);
+		}
+
+		.days {
+			display: inline-block;
+			border-right: 1px solid rgba(0, 0, 0, 0.1);
+			min-width: 80px;
+			text-align: left;
+			padding: 5px 5px;
+		}
+
+		.descr {
+			display: inline-block;
+			padding: 10px 10px 10px 20px;
+			letter-spacing: 0.2px;
+		}
+	}
 }
