@@ -108,6 +108,7 @@ $(document).ready(function() {
 					.attr('class', 'disposal-date')
 					.style('opacity', 0);
 
+		//	Date
 		enteredDisposal
 			.append('span')
 				.attr('class', 'date')
@@ -116,6 +117,15 @@ $(document).ready(function() {
 					return dateFormat(date);
 				});
 
+		//	Days
+		enteredDisposal
+			.append('span')
+				.attr('class', 'days')
+				.text(function(d) {
+					return daysTo(d.date);
+				});
+
+		//	Description
 		enteredDisposal.append('span')
 				.attr('class', 'descr')
 				.text(function(d) { return d.descr; });
@@ -150,6 +160,10 @@ $(document).ready(function() {
 				let date = new Date(d.date);
 				return dateFormat(date);
 			});
+
+		disposals
+			.select('span.days')
+			.text(function(d) { return daysTo(d.date); });
 
 		disposals
 			.select('span.descr')
