@@ -30,12 +30,12 @@ gulp.task('index', function() {
     var index = gulp.src(srcPath + 'data/**/*.json')
         .pipe(gulp.dest(distPath + 'data'));
 
-    return merge(data, index)
+    return merge(data, index);
 });
 
 // Compile Our Sass
 gulp.task('sass', function() {
-    return gulp.src(srcPath + 'css/*.+(scss|css)')
+    return gulp.src(srcPath + 'css/+(*.scss|*.css)')
         .pipe(sass())
         .pipe(gulp.dest(distPath + 'css'));
 });
@@ -66,7 +66,7 @@ gulp.task('scripts', function() {
 gulp.task('watch', function() {
     gulp.watch(srcPath + '*.html', []);
     gulp.watch(srcPath + 'js/*.js', ['lint', 'scripts']);
-    gulp.watch(srcPath + 'scss/*.scss', ['sass']);
+    gulp.watch(srcPath + 'css/+(*.scss|*.css)', ['sass']);
 });
 
 // Default Task
