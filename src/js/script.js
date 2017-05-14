@@ -72,7 +72,7 @@ $(document).ready(function() {
 			let date = new Date(d.date);
 			let today = new Date();
 
-			return date >= today;
+			return date >= today && daysTo(date) <= 31;
 		});
 
 		let nextDisposalDate = disposalDates.slice(0, 1);
