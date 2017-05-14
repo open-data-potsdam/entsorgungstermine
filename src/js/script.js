@@ -18,8 +18,9 @@ $(document).ready(function() {
 	});
 
 	var selectize = $select[0].selectize;
+	let uriStreets = 'data/potsdam/streets.json';
 
-	$.ajax("data/potsdam/streets.json", function(data) { }).done(function(data) {
+	$.ajax(uriStreets, function(data) { }).done(function(data) {
 			let streets = data;
 			streets.forEach(street => selectize.addOption({id: street.id, name: street.streetName}));
 			selectize.refreshOptions();
@@ -42,7 +43,10 @@ $(document).ready(function() {
 
 		console.log('streetName', streetName);
 
-		$.ajax("data/potsdam/dates/1 Aalsteig.json", function(data) { }).done(function(disposalObj) {
+		let filename = id + ' ' + streetName + '.json';
+		let uri = 'data/potsdam/dates/' + filename;
+
+		$.ajax(uri, function(data) { }).done(function(disposalObj) {
 			let currentMonth = currentDate.getMonth();
 			let disposalMonth = MONTHS[currentMonth];
 			let disposalDates = disposalObj[streetName][disposalMonth];
