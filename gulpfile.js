@@ -10,6 +10,7 @@ const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const webserver = require('gulp-webserver');
 const merge = require('merge-stream');
+const clean = require('gulp-clean');
 
 let srcPath = 'src/';
 let distPath = 'dist/';
@@ -60,6 +61,11 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest(distPath + 'js'));
         // .pipe(uglify())
         //.pipe(gulp.dest(distPath + 'js'));
+});
+
+gulp.task('clean', function() {
+    return gulp.src('dist', {read: false})
+        .pipe(clean());
 });
 
 // Watch Files For Changes
