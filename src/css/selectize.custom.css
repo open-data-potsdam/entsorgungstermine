@@ -1,0 +1,14 @@
+.selectize-input {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+
+  &.focus {
+    box-shadow: none
+  }
+}
+
