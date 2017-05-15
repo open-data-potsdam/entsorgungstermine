@@ -21,7 +21,7 @@ $(document).ready(function() {
 	    }
 	});
 
-	var selectize = $select[0].selectize;
+	let selectize = $select[0].selectize;
 	let uriStreets = 'data/potsdam/streets.json';
 
 	$.ajax(uriStreets, function(data) { }).done(function(data) {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		});
 
 	selectize.on("change", (value) => {
-		var street = selectize.getItem(value);
+		let street = selectize.getItem(value);
 		updateDatesFor(street);
 	});
 
@@ -152,7 +152,7 @@ $(document).ready(function() {
 		//
 		//	ENTER
 		//
-		var enteredDisposals = element.enter()
+		let enteredDisposals = element.enter()
 			.append('div')
 				.attr('class', 'disposal-date')
 				// .style('position', 'relative')
@@ -203,6 +203,18 @@ $(document).ready(function() {
 	}
 
 	function daysToStr(date) {
-		return 'in ' + daysTo(date) + ' Tagen';
+		let days = daysTo(date);
+
+		let str = '';
+		if(days > 2)
+			str = `in ${days} Tagen`;
+		else if(days === 2)
+			str = 'übermorgen';
+		else if(days === 1)
+			str = 'morgen';
+		else if(days === 0)
+			str = 'heute;'
+
+		return str;
 	}
 });
