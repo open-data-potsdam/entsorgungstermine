@@ -6,6 +6,7 @@ $(document).ready(function() {
 	let streetName;
 
 	let $select = $('#streets').selectize({
+		placeholder: 'Hier Straße wählen...',
 	    valueField: 'id',
 	    labelField: 'name',
 	    searchField: 'name',
