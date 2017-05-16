@@ -204,7 +204,7 @@ $(document).ready(function() {
 	function daysTo(date) {
 		let today = new Date();
 		let toDate = new Date(date);
-		let days = Math.ceil(Math.round(toDate - today) / (750*60*60*24));
+		let days = Math.ceil(Math.round(toDate - today) / (1000*60*60*24));
 
 		return days;
 	}
