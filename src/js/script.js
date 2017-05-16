@@ -1,8 +1,10 @@
 $(document).ready(function() {
 
 	const MONTHS = ['btMCMonth1', 'btMCMonth2', 'btMCMonth3', 'btMCMonth4', 'btMCMonth5', 'btMCMonth6', 'btMCMonth7', 'btMCMonth8', 'btMCMonth9', 'btMCMonth10', 'btMCMonth11', 'btMCMonth12'];
-	let dateFormat = d3.timeFormat("%d.%m.");
+	const DEFAULT_DURATION = 750;
+	const ELEMENT_OFFSET = 30;
 
+	let dateFormat = d3.timeFormat("%d.%m.");
 	let streetName;
 
 	let $select = $('#streets').selectize({
@@ -126,12 +128,8 @@ $(document).ready(function() {
 		element
 			.exit()
 			.transition()
-			.duration(750)
+			.duration(DEFAULT_DURATION)
 			.style('opacity', 0)
-			.style('top', function(d, i) {
-				return "0px";
-			})
-			//.style('opacity', 0)
 			.remove();
 
 		//	UPDATE
@@ -161,7 +159,7 @@ $(document).ready(function() {
 				.attr('class', 'disposal-date')
 				.style('position', 'absolute')
 				.style('top', function(d, i) {
-					return 30*i + "px";
+					return ELEMENT_OFFSET*i + "px";
 				})
 				.style('opacity', 0);
 
@@ -189,9 +187,9 @@ $(document).ready(function() {
 
 		enteredDisposals
 			.transition()
-			.duration(750)
+			.duration(DEFAULT_DURATION)
 			.style('top', function(d, i) {
-				return 30*i+ "px";
+				return ELEMENT_OFFSET*i+ "px";
 			})
 			.style('opacity', 1);
 	}
