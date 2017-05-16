@@ -70,7 +70,7 @@ gulp.task('clean', function() {
 
 // Watch Files For Changes
 gulp.task('watch', function() {
-    gulp.watch(srcPath + '*.html', ['lint', 'scripts']);
+    gulp.watch(srcPath + '*.html', ['index']);
     gulp.watch(srcPath + 'js/*.js', ['lint', 'scripts']);
     gulp.watch(srcPath + 'css/+(*.scss|*.css)', ['sass']);
 });
