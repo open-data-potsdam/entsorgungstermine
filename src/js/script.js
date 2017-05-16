@@ -129,27 +129,17 @@ $(document).ready(function() {
 			.exit()
 			.transition()
 			.duration(DEFAULT_DURATION)
+			.style('top', function(d, i) {
+				return ELEMENT_OFFSET * i + "px";
+			})
+			.style('left', function(d, i) {
+				return (-ELEMENT_OFFSET*2) + "px";
+			})
 			.style('opacity', 0)
 			.remove();
 
-		//	UPDATE
-		let spans = element
-			.selectAll('span');
+			// TODO: Am Buchhors, zwei Items top: 20px
 
-			spans
-				.select('span.date')
-				.text(function(d) {
-					let date = new Date(d.date);
-					return dateFormat(date);
-				});
-
-			spans
-				.select('span.days')
-				.text(function(d) { return daysToStr(d.date); });
-
-			spans
-				.select('span.descr')
-				.text(function(d) { return d.descr; });
 
 		//
 		//	ENTER
@@ -160,6 +150,9 @@ $(document).ready(function() {
 				.style('position', 'absolute')
 				.style('top', function(d, i) {
 					return ELEMENT_OFFSET*i + "px";
+				})
+				.style('left', function(d, i) {
+					return (2*ELEMENT_OFFSET) + "px";
 				})
 				.style('opacity', 0);
 
@@ -188,10 +181,35 @@ $(document).ready(function() {
 		enteredDisposals
 			.transition()
 			.duration(DEFAULT_DURATION)
+			.style('left', function(d, i) {
+				return "0px";
+			})
 			.style('top', function(d, i) {
 				return ELEMENT_OFFSET*i+ "px";
 			})
 			.style('opacity', 1);
+
+		//
+		//	UPDATE
+		//
+		let spans = element
+			.selectAll('span');
+
+			spans
+				.select('span.date')
+				.text(function(d) {
+					let date = new Date(d.date);
+					return dateFormat(date);
+				});
+
+			spans
+				.select('span.days')
+				.text(function(d) { return daysToStr(d.date); });
+
+			spans
+				.select('span.descr')
+				.text(function(d) { return d.descr; });
+
 	}
 
 	/**
