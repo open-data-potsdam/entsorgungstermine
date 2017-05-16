@@ -15,8 +15,10 @@ body {
 
 	.wrapper { max-width: 1024px; margin: 0 auto; }
 
-	#next-disposal-date { position: relative; }
-	#upcoming-disposal-dates { position: relative; }
+	.disposal-dates {
+		position: relative;
+		margin-bottom: 60px;
+	}
 
 	.disposal-date {
 		margin: 3px 0;

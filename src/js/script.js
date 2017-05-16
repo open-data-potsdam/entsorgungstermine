@@ -93,7 +93,7 @@ $(document).ready(function() {
 	 * @return {[type]}      [description]
 	 */
 	function updateNextDisposalDate(data) {
-		let disposal = d3.select('div#next-disposal-date')
+		let disposal = d3.select('div.disposal-dates.next')
 				.selectAll('div.disposal-date')
 				.data(data, function(d) { return d.date + " - " + streetName; });
 
@@ -107,7 +107,7 @@ $(document).ready(function() {
 	 */
 	function updateUpcomingDisposalDates(data) {
 		console.log('selec', streetName);
-		let disposals = d3.select('div#upcoming-disposal-dates')
+		let disposals = d3.select('div.disposal-dates.upcoming')
 				.selectAll('div.disposal-date')
 				.data(data, function(d) { return d.date + " - " + streetName });
 
@@ -128,6 +128,10 @@ $(document).ready(function() {
 			.transition()
 			.duration(750)
 			.style('opacity', 0)
+			.style('top', function(d, i) {
+				return "0px";
+			})
+			//.style('opacity', 0)
 			.remove();
 
 		//	UPDATE
@@ -155,10 +159,10 @@ $(document).ready(function() {
 		let enteredDisposals = element.enter()
 			.append('div')
 				.attr('class', 'disposal-date')
-				// .style('position', 'relative')
-				// .style('top', function(d, i) {
-				// 	return 25*i+ "px";
-				// })
+				.style('position', 'absolute')
+				.style('top', function(d, i) {
+					return 30*i + "px";
+				})
 				.style('opacity', 0);
 
 			//	Date
@@ -186,6 +190,9 @@ $(document).ready(function() {
 		enteredDisposals
 			.transition()
 			.duration(750)
+			.style('top', function(d, i) {
+				return 30*i+ "px";
+			})
 			.style('opacity', 1);
 	}
 
