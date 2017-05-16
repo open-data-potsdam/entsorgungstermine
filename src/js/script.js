@@ -97,7 +97,7 @@ $(document).ready(function() {
 	function updateNextDisposalDate(data) {
 		let disposal = d3.select('div.disposal-dates.next')
 				.selectAll('div.disposal-date')
-				.data(data, function(d) { return d.date + " - " + streetName; });
+				.data(data, function(d) { return d.date + " - " + d.descr; });
 
 		createRow(disposal);
 	}
@@ -111,7 +111,7 @@ $(document).ready(function() {
 		console.log('selec', streetName);
 		let disposals = d3.select('div.disposal-dates.upcoming')
 				.selectAll('div.disposal-date')
-				.data(data, function(d) { return d.date + " - " + streetName });
+				.data(data, function(d) { return d.date + " - " + d.descr });
 
 		createRow(disposals);
 	}
