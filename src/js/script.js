@@ -3,6 +3,7 @@ $(document).ready(function() {
 	const MONTHS = ['btMCMonth1', 'btMCMonth2', 'btMCMonth3', 'btMCMonth4', 'btMCMonth5', 'btMCMonth6', 'btMCMonth7', 'btMCMonth8', 'btMCMonth9', 'btMCMonth10', 'btMCMonth11', 'btMCMonth12'];
 	const DEFAULT_DURATION = 750;
 	const ELEMENT_OFFSET = 30;
+	const ANIMATION_OFFSET = 50;
 
 	let dateFormat = d3.timeFormat("%d.%m.");
 	let streetName;
@@ -133,7 +134,7 @@ $(document).ready(function() {
 				return ELEMENT_OFFSET * i + "px";
 			})
 			.style('left', function(d, i) {
-				return (-ELEMENT_OFFSET*2) + "px";
+				return (-ANIMATION_OFFSET) + "px";
 			})
 			.style('opacity', 0)
 			.remove();
@@ -152,7 +153,7 @@ $(document).ready(function() {
 					return ELEMENT_OFFSET*i + "px";
 				})
 				.style('left', function(d, i) {
-					return (2*ELEMENT_OFFSET) + "px";
+					return ANIMATION_OFFSET + "px";
 				})
 				.style('opacity', 0);
 
