@@ -23,7 +23,7 @@ let cleanOptions = {
 
 const config = {
 	context: path.resolve(__dirname, 'src'),
-	entry: './js/script.js',
+	entry: './js/app.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'
