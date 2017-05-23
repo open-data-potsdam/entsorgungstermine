@@ -13,26 +13,17 @@ let pathsToClean = [
   'dist/*',
 ]
 
-// the clean options to use
-let cleanOptions = {
-  root:     '/Users/max/Developer/Abfallentsorgung/www/',
-  exclude:  ['dist/data'],
-  verbose:  true,
-  dry:      false
-}
-
 const config = {
 	context: path.resolve(__dirname, 'src'),
+	watch: true,
 	entry: './js/app.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'bundle.js'
 	},
 	plugins: [
-		new CleanWebpackPlugin(pathsToClean, cleanOptions),
 		new LiveReloadPlugin({ port: 35729, appendScriptTag: false }),
 		new CopyWebpackPlugin([
-			// {output}/to/file.txt
             { from: 'index.html' },
             { from: 'data/**/*'  },
             { from: 'css/style.scss', to: 'css/style.css' },
