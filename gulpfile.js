@@ -11,6 +11,8 @@ const rename = require('gulp-rename');
 const webserver = require('gulp-webserver');
 const merge = require('merge-stream');
 const clean = require('gulp-clean');
+const vueify = require('gulp-vueify');
+const browserify = require('gulp-browserify');
 
 let srcPath = 'src/';
 let distPath = 'dist/';
@@ -51,14 +53,34 @@ gulp.task('libs', function() {
         //.pipe(gulp.dest(distPath + 'js'));
 });
 
+// Fonts
+gulp.task('fonts', function() {
+    return gulp.src(srcPath + 'fonts/*')
+        .pipe(gulp.dest(distPath + 'fonts'))
+});
+
+//  Components
+gulp.task('components', function() {
+    var sources = srcPath + 'js/components/**/*.vue';
+
+      return gulp.src(sources)
+        .pipe(vueify())
+        .pipe(gulp.dest(distPath + 'js/components'));
+
+});
+
 // Script
 gulp.task('scripts', function() {
-    return gulp.src(srcPath + 'js/*.js')
-        .pipe(concat('script.js'))
-        .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(gulp.dest(distPath + 'js'));
+    var sources = srcPath + 'js/app.js';
+    return gulp.src(sources)
+        .pipe(browserify({
+                insertGlobals: true
+                //debug: !gulp.env.production
+            }))
+        //.pipe(babel({
+           //presets: ['es2015']
+        //}))
+        .pipe(gulp.dest(distPath + 'js/'));
         // .pipe(uglify())
         //.pipe(gulp.dest(distPath + 'js'));
 });
@@ -71,9 +93,9 @@ gulp.task('clean', function() {
 // Watch Files For Changes
 gulp.task('watch', function() {
     gulp.watch(srcPath + '*.html', ['index']);
-    gulp.watch(srcPath + 'js/*.js', ['lint', 'scripts']);
+    gulp.watch(srcPath + 'js/*.js', ['scripts']);
     gulp.watch(srcPath + 'css/+(*.scss|*.css)', ['sass']);
 });
 
 // Default Task
-gulp.task('default', ['lint', 'index', 'sass', 'libs', 'scripts', 'watch']);
+gulp.task('default', ['index', 'sass', 'scripts', 'components', 'fonts', 'watch']);
