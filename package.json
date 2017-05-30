@@ -8,6 +8,9 @@
     "prod": "gulp build",
     "build": "gulp build"
   },
+  "browser": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
