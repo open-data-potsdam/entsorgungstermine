@@ -13,10 +13,9 @@
   </head>
   <body>
 
-  	<div class="wrapper">
+  	<div id="app">
       <h1>Entsorgungstsermine Potsdam</h1>
-
-  		<select id="streets"></select>
+      <select id="streets" v-on:change="onChangeStreet"></select>
 
       <h2>Nächster Entsorgungstermin</h2>
       <div class="disposal-dates next"></div>
