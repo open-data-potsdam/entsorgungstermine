@@ -1,4 +1,6 @@
-import $ from "jquery";
-require('vue');
-import './script.js';
-import "./lib/selectize.js";
+global.d3 = require('d3');
+global.$ = require('jquery');
+global.jQuery = $;
+global.Vue = require('vue');
+
+require('./main.js');
